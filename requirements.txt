@@ -1,32 +1,32 @@
 #
 # Production requirements
 #
-alembic==1.4.*                              # Database structure migrations
-celery[redis]==5.2.*                        # Asynchronous queue
-cssmin==0.2.*                               # CSS asset compression
-gevent==23.9.1                              # Enables usage of SSE on gunicorn
-gunicorn==23.0.*                            # WSGI server
-humanize==2.2.*                             # human readable units of measurement
-jsmin==2.2.*                                # Javascript asset copression
-ldap3==2.4.*
-psycopg2-binary==2.8.*                      # PostgreSQL database driver
-python-dateutil==2.8.*                      # Better fuzzy date parsing
-python-magic==0.4.*                         # File input validation
-python-slugify==4.0.*                       # Path-friendly name generator
-pyramid==1.10.*                             # Framework
-pyramid_chameleon==0.3.*                    # Templating
-pyramid_exclog==1.*                         # Error log messaging for production
-pyramid_redis==0.1.*
-pyramid_session_redis==1.5.*                # Redis-based HTTP session
-pyramid_tm==2.4.*                           # Centralized transactions
-pyramid_webassets==0.10.*                   # Asset management and compilation
+alembic                                     # Database structure migrations
+celery[redis]                               # Asynchronous queue
+cssmin                                      # CSS asset compression
+gevent                                      # Enables usage of SSE on gunicorn
+gunicorn                                    # WSGI server
+humanize                                    # human readable units of measurement
+jsmin                                       # Javascript asset copression
+ldap3
+psycopg2-binary                             # PostgreSQL database driver
+python-dateutil                             # Better fuzzy date parsing
+python-magic                               # File input validation
+python-slugify                              # Path-friendly name generator
+pyramid                                     # Framework
+pyramid_chameleon                           # Templating
+pyramid_exclog                              # Error log messaging for production
+pyramid_redis
+pyramid_session_redis                       # Redis-based HTTP session
+pyramid_tm                                  # Centralized transactions
+pyramid_webassets                           # Asset management and compilation
 -e git+http://github.com/m-martinez/pyramid_who.git@py3k#egg=pyramid_who # User authentication
-repoze.who==2.3.*
-rutter==0.2.*                               # Virtual URL path proxy-passing
-SQLAlchemy==1.3.*                           # ORM
-tabulate==0.8.*                             # ASCII tables for CLI pretty printing
-who_ldap==4.0.*
-WTForms==2.2.*                              # Data input validation
-WTForms-Components==0.10.*
-WTForms-JSON==0.3.*
-zope.sqlalchemy==1.3.*                      # Connects sqllachemy to pyramid_tm
+repoze.who
+rutter                                      # Virtual URL path proxy-passing
+SQLAlchemy                                  # ORM
+tabulate                                    # ASCII tables for CLI pretty printing
+who_ldap
+WTForms                                     # Data input validation
+WTForms-Components
+WTForms-JSON
+zope.sqlalchemy                             # Connects sqllachemy to pyramid_tm

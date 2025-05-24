@@ -1,40 +1,43 @@
-# Dockerfile for for web application service
+# Dockerfile for web application service
 #
 # Installs the web application in "edit" mode so that modifications are
-# immediately reflected .
+# immediately reflected.
 #
 
-FROM python:3.7.7-slim AS base
+FROM python:3.9-slim AS base
 
-ENV NODE_MAJOR_VERSION=12
+ENV NODE_MAJOR_VERSION=18
+
+# Install system dependencies including build tools
 RUN apt-get update \
-    && apt-get install curl wget git libmagic1 -y \
-    && curl -sL https://deb.nodesource.com/setup_${NODE_MAJOR_VERSION}.x | bash - \
-    && apt-get install nodejs -y \
-    && apt-get clean
+ && apt-get install -y curl wget git libmagic1 make gcc g++ python3-dev \
+ && curl -fsSL https://deb.nodesource.com/setup_${NODE_MAJOR_VERSION}.x | bash - \
+ && apt-get install -y nodejs \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g less \
-    && npm install -g bower \
+# Install global npm packages
+RUN npm install -g less bower \
     && echo '{ "allow_root": true }' > /root/.bowerrc
 
+# Install dockerize
 ENV DOCKERIZE_VERSION v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 ENV ENVIRONMENT "development"
-
-# Don't buffer STDOUT so that logs show immediately
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-# Install requirements first before copying source files
+# Install Python requirements
 COPY ./constraints.txt ./requirements*.txt ./
-RUN pip install \
+RUN pip install --no-cache-dir \
     -c constraints.txt \
     -r $( [ "$ENVIRONMENT" = "development" ] && echo "requirements-develop.txt" || echo "requirements.txt" )
 
+# Copy application code
 ADD . ./
 
 FROM base AS development
